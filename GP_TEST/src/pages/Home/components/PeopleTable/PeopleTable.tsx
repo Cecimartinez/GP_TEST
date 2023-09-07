@@ -1,10 +1,9 @@
-import { People } from '@/data/people';
 import { Person } from '@/models/people';
-import { addFavorite, addPeople } from '@/redux';
+import { addFavorite } from '@/redux';
 import { AppStore } from '@/redux/store';
 import { Checkbox } from '@mui/material';
 import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export interface PeopleTableInterface{}
@@ -15,28 +14,21 @@ export const PeopleTable:React.FC<PeopleTableInterface> = ()=>{
   const filterPerson = (person:Person) => peopleSelected.filter(p => p.id !== person.id)
 
   const statePeople = useSelector((store: AppStore) => store.people);
-
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(addPeople(People));
-  }, []);
-
-
+  const pageSizeOptions = [5]; 
   const [peopleSelected, setPeopleSelected] = useState <Person[]>([])
 
   const handleChange = (person:Person) => {
     const filteredPeople = findPerson(person) ? filterPerson(person) : [...peopleSelected, person];
     dispatch(addFavorite(filteredPeople));
     setPeopleSelected(filteredPeople);
-
   }
 
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 5,
     page: 0,
   });
-
 
   const columns = [
     {
@@ -46,13 +38,8 @@ export const PeopleTable:React.FC<PeopleTableInterface> = ()=>{
       heraderName:'',
       width:50,
       renderCell: (params:GridRenderCellParams) => <> {
-
         <Checkbox size='small' checked={findPerson(params.row) } onChange={()=> handleChange(params.row)}  />
-      }
-        
-        
-        </>
-    },
+      } </> },
     {
       field: 'name',
       heraderName:'Name',
@@ -60,14 +47,12 @@ export const PeopleTable:React.FC<PeopleTableInterface> = ()=>{
       minWidth:150,
       renderCell: (params:GridRenderCellParams) => <>{params.value }</>
     },
-
     {
       field: 'category',
       heraderName:'Categories',
       flex:1,
       renderCell: (params:GridRenderCellParams) => <>{params.value }</>
     },
-
     {
       field: 'company',
       heraderName:'Company',
@@ -76,11 +61,6 @@ export const PeopleTable:React.FC<PeopleTableInterface> = ()=>{
       renderCell: (params:GridRenderCellParams) => <>{params.value }</>
     }
   ];
-
-
-    const pageSizeOptions = [5]; 
-
-    
 
   return (
     <>
