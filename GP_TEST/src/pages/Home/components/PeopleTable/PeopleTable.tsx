@@ -3,15 +3,19 @@ import { addFavorite } from '@/redux';
 import { AppStore } from '@/redux/store';
 import { Checkbox } from '@mui/material';
 import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+// import { red } from '@mui/material/colors';
 
 export interface PeopleTableInterface{}
 
 export const PeopleTable:React.FC<PeopleTableInterface> = ()=>{
 
-  const findPerson = (person:Person) => !!peopleSelected.find(p => p.id === person.id)
-  const filterPerson = (person:Person) => peopleSelected.filter(p => p.id !== person.id)
+  const favoritePeople = useSelector((store: AppStore) =>  store.favorites);
+
+
+  const findPerson = (person:Person) => !!favoritePeople.find(p => p.id === person.id)
+  const filterPerson = (person:Person) => favoritePeople.filter(p => p.id !== person.id)
 
   const statePeople = useSelector((store: AppStore) => store.people);
   const dispatch = useDispatch();
@@ -38,7 +42,13 @@ export const PeopleTable:React.FC<PeopleTableInterface> = ()=>{
       heraderName:'',
       width:50,
       renderCell: (params:GridRenderCellParams) => <> {
-        <Checkbox size='small' checked={findPerson(params.row) } onChange={()=> handleChange(params.row)}  />
+        <Checkbox size='small' checked={findPerson(params.row) } onChange={()=> handleChange(params.row)} 
+            sx={{
+              '&.Mui-checked': {
+                color: '#53f', 
+              },
+            }}
+        />
       } </> },
     {
       field: 'name',
@@ -59,8 +69,19 @@ export const PeopleTable:React.FC<PeopleTableInterface> = ()=>{
       flex:1,
       minWidth:150,
       renderCell: (params:GridRenderCellParams) => <>{params.value }</>
+    },
+    {
+      field: 'levelOfHappiness',
+      heraderName:'Level Of Happiness',
+      flex:1,
+      minWidth:150,
+      renderCell: (params:GridRenderCellParams) => <>{params.value }</>
     }
   ];
+
+  useEffect(() => {
+    setPeopleSelected(favoritePeople);
+  }, [favoritePeople]);
 
   return (
     <>
