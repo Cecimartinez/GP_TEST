@@ -3,6 +3,6 @@ export interface Person {
   name: string;
   category: string;
   company: string;
-  levelOfHappiness: Number
+  levelOfHappiness: number;
 
 }
