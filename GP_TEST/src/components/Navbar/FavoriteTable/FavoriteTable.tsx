@@ -37,7 +37,7 @@ const FavoriteTable: React.FC<FavoriteTableInterface> = () => {
       renderCell: (params:GridRenderCellParams) => <>{params.value }</>
     },
     {
-      field: 'Category',
+      field: 'category',
       heraderName:'Categories',
       flex:1,
       renderCell: (params:GridRenderCellParams) => <>{params.value }</>
@@ -54,8 +54,16 @@ const FavoriteTable: React.FC<FavoriteTableInterface> = () => {
       heraderName:'Level Of Happiness',
       flex:1,
       minWidth:150,
-      renderCell: (params:GridRenderCellParams) => <>{params.value }</>
-    },
+      renderCell: (params: GridRenderCellParams) => {
+        const happinessPercentage = params.value as number;
+        const emoji = happinessPercentage >= 80 ? '😁' : happinessPercentage >= 60 ? '😃' : happinessPercentage >= 40 ? '🙂' : happinessPercentage >= 20 ? '😐' : '😞';
+    
+        return (
+          <span role="img" aria-label={`Emoji de felicidad ${emoji}`}>
+            {emoji} {happinessPercentage}%
+          </span>
+        );
+      }    },
     {
       field: 'actions',
       type: 'actions',
