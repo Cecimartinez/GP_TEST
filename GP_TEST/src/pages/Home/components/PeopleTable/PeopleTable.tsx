@@ -37,55 +37,61 @@ export const PeopleTable:React.FC<PeopleTableInterface> = ()=>{
   const columns = [
     {
       field: 'actions',
-      type:'actions',
-      sortable:false,
-      heraderName:'',
-      width:50,
-      renderCell: (params:GridRenderCellParams) => <> {
-        <Checkbox size='small' checked={findPerson(params.row) } onChange={()=> handleChange(params.row)} 
-            sx={{
-              '&.Mui-checked': {
-                color: '#53f', 
-              },
-            }}
+      type: 'actions',
+      sortable: false,
+      headerName: '', 
+      width: 50,
+      renderCell: (params: GridRenderCellParams) => (
+        <Checkbox
+          size='small'
+          checked={findPerson(params.row)}
+          onChange={() => handleChange(params.row)}
+          sx={{
+            '&.Mui-checked': {
+              color: '#53f',
+            },
+          }}
         />
-      } </> },
+      ),
+    },
     {
       field: 'name',
-      heraderName:'Name',
-      flex:1,
-      minWidth:150,
-      renderCell: (params:GridRenderCellParams) => <>{params.value }</>
+      headerName: 'Name', 
+      flex: 1,
+      minWidth: 150,
+      renderCell: (params: GridRenderCellParams) => <>{params.value}</>,
     },
     {
       field: 'category',
-      heraderName:'Categories',
-      flex:1,
-      renderCell: (params:GridRenderCellParams) => <>{params.value }</>
+      headerName: 'Categories', 
+      flex: 1,
+      renderCell: (params: GridRenderCellParams) => <>{params.value}</>,
     },
     {
       field: 'company',
-      heraderName:'Company',
-      flex:1,
-      minWidth:150,
-      renderCell: (params:GridRenderCellParams) => <>{params.value }</>
+      headerName: 'Company', 
+      flex: 1,
+      minWidth: 150,
+      renderCell: (params: GridRenderCellParams) => <>{params.value}</>,
     },
     {
       field: 'levelOfHappiness',
-      heraderName:'Level Of Happiness',
-      flex:1,
-      minWidth:150,
+      headerName: 'Level Of Happiness', 
+      flex: 1,
+      minWidth: 150,
       renderCell: (params: GridRenderCellParams) => {
         const happinessPercentage = params.value as number;
         const emoji = happinessPercentage >= 80 ? '😁' : happinessPercentage >= 60 ? '😃' : happinessPercentage >= 40 ? '🙂' : happinessPercentage >= 20 ? '😐' : '😞';
-    
+  
         return (
           <span role="img" aria-label={`Emoji de felicidad ${emoji}`}>
             {emoji} {happinessPercentage}%
           </span>
         );
-      }    }
+      },
+    },
   ];
+  
 
   useEffect(() => {
     setPeopleSelected(favoritePeople);

@@ -31,27 +31,27 @@ const FavoriteTable: React.FC<FavoriteTableInterface> = () => {
     
     {
       field: 'name',
-      heraderName:'Name',
+      headerName:'Name',
       flex:1,
       minWidth:150,
       renderCell: (params:GridRenderCellParams) => <>{params.value }</>
     },
     {
       field: 'category',
-      heraderName:'Categories',
+      headerName:'Categories',
       flex:1,
       renderCell: (params:GridRenderCellParams) => <>{params.value }</>
     },
     {
       field: 'company',
-      heraderName:'Company',
+      headerName:'Company',
       flex:1,
       minWidth:150,
       renderCell: (params:GridRenderCellParams) => <>{params.value }</>
     },
     {
       field: 'levelOfHappiness',
-      heraderName:'Level Of Happiness',
+      headerName:'Level Of Happiness',
       flex:1,
       minWidth:150,
       renderCell: (params: GridRenderCellParams) => {
