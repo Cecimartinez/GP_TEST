@@ -2,7 +2,7 @@ import { Person } from '@/models/people';
 import { addFavorite } from '@/redux';
 import { AppStore } from '@/redux/store';
 import { Checkbox } from '@mui/material';
-import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid';
+import { DataGrid, GridRenderCellParams, GridToolbar } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { red } from '@mui/material/colors';
@@ -106,9 +106,13 @@ export const PeopleTable:React.FC<PeopleTableInterface> = ()=>{
           paginationModel={paginationModel}  
           onPaginationModelChange={setPaginationModel}
           pageSizeOptions={pageSizeOptions} 
+          slots={{
+            toolbar: GridToolbar,
+          }}
           columns={columns}
           rows={statePeople}
           getRowId={(row:any) => row.id}
+          
         />
     </>
   )
